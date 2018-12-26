@@ -9,14 +9,6 @@ fetch("https://randomuser.me/api/?results=12&nat=gb")
   .then(function(response) { //it always uses that in the function, that was returned before
     return response.json();
   })
-  .then(function(myJson) {
-    console.log(myJson);
-    return myJson;
-  })
-  .then(function(data) {
-      console.log(data.results[0].nat);
-      return data;
-  })
   .then(function(data) {
     const users = data.results;
     displayUsers(users);
@@ -24,11 +16,21 @@ fetch("https://randomuser.me/api/?results=12&nat=gb")
       const click = event.target;
       console.log(click);
       // Muss noch richtige Parentnodes und so hinzufügen, damit es immer richtig feuert
-      // for(let i = 0; i < $(".modal-container").length; i++) {
-      //   if(click.parentNode.children[0].children[0].src === $(".modal-container")[i].children[0].children[1].children[0].src || click.parentNode.parentNode.children[0].children[0].src === $(".modal-container")[i].children[0].children[1].children[0].src || click.parentNode.parentNode.parentNode.children[0].children[0].src === $(".modal-container")[i].children[0].children[1].children[0].src) {
-      //     $(".modal-container").eq(i).show();
-      //   }
-      // }
+      for(let i = 0; i < $(".modal-container").length; i++) {
+        if (click.parentNode.parentNode.children[0].children[0].tagName == "IMG") {
+          if(click.parentNode.parentNode.children[0].children[0].src === $(".modal-container")[i].children[0].children[1].children[0].src) {
+            $(".modal-container").eq(i).show();
+          }
+        } else if (click.parentNode.children[0].children[0].tagName == "IMG") {
+          if ( click.parentNode.children[0].children[0].src === $(".modal-container")[i].children[0].children[1].children[0].src ) {
+            $(".modal-container").eq(i).show();
+          }
+        } else if (click.children[0].children[0].tagName == "IMG") {
+          if (click.children[0].children[0].src === $(".modal-container")[i].children[0].children[1].children[0].src) {
+            $(".modal-container").eq(i).show();
+          }
+        }
+      }
     })
   })
 
