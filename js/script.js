@@ -119,3 +119,39 @@ function displayUsers(data) {
   $("body").append(modalHTML);
   $(".modal-container").hide();
 };
+
+
+
+// SearchBox
+
+// create SearchBox
+const searchHTML = `<form action="#" method="get">
+                        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+                        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+                    </form>`
+
+$(".search-container").append(searchHTML);
+
+$("#search-submit").click(function () {
+  searchBox();
+})
+
+function searchBox () {
+	// Declare variables
+	var $input, filter, $user, i;
+	$input = $('#search-input');
+	filter = $input.val().toUpperCase();
+	$user = $(".card");
+
+	// Loop through all user(s) and hide those who dont match the search query
+	for (i = 0; i < $user.length; i++) {
+    $userName = $user[i].lastElementChild.getElementsByTagName("h3")[0];
+		if ($userName) {
+			if ($userName.textContent.toUpperCase().indexOf(filter) > -1) {
+				$user[i].style.display = "";
+			} else {
+				$user[i].style.display = "none";
+			}
+		}
+	}
+}
